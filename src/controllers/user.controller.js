@@ -98,7 +98,7 @@ const loginUser = asyncHandler(async (req, res)=>{
 
     const {username, email, password} = req.body
 
-    if(!username || !email){
+    if(!username && !email){
         throw new ApiError(400, "username or email is required")
     }
 
@@ -117,7 +117,7 @@ const loginUser = asyncHandler(async (req, res)=>{
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id)
 
-    const loggedInUser = User.findById(user._id).select("-password -refreshToken")
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
     const options = {
         httpOnly: true,
@@ -148,7 +148,8 @@ const logoutUser = asyncHandler(async (req, res)=>{
             }
         },
         {
-            new: true
+            // new: true
+            returnDocument: "after"
         }
     )
 
@@ -157,6 +158,8 @@ const logoutUser = asyncHandler(async (req, res)=>{
         secure: true
     }
 
+    console.log("user logged out successfully");
+    
     return res
     .status(200)
     .clearCookie("accessToken",options)
