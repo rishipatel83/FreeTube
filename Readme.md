@@ -1,4 +1,4 @@
-# Chai aur Backend
+# FreeTube Backend API
 
 A comprehensive, production-ready backend API built with **Node.js, Express.js, and MongoDB**. This project is inspired by the "Chai aur Code" backend series, focusing on standard industry practices, scalable architecture, and robust database management.
 
